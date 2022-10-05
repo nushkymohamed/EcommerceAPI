@@ -106,7 +106,7 @@ function  generateId(orderIdArray)
     if(orderIdArray.includes(orderId))
     {
         arrSize++;
-        orderId="ST0"+arrSize;
+        orderId="OR0"+arrSize;
     }
     return orderId;
 }

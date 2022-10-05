@@ -6,6 +6,7 @@ const bodyParser = require('body-parser');
 const productRouter = require("./src/routes/productRouter");
 const userRouter = require("./src/routes/userRouter");
 const orderRouter = require("./src/routes/orderRouter");
+const categoryRouter = require("./src/routes/categoryRouter");
 
 dotenv.config();
 const app = express();
@@ -37,6 +38,7 @@ app.route('/').get((req, res) => {
 app.use("/products", productRouter);
 app.use("/user", userRouter);
 app.use("/order", orderRouter);
+app.use("/category", categoryRouter);
 
 
 

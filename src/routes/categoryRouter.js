@@ -1,17 +1,17 @@
 const express = require('express');
 const bodyParser = require("body-parser");
-const Product = require("../models/Products");
-const productRouter = express.Router();
+const Category = require("../models/Category");
+const categoryRouter = express.Router();
 
-productRouter.use(bodyParser.json());
+categoryRouter.use(bodyParser.json());
 
-productRouter.route('/')
+categoryRouter.route('/')
     .get(async (req,res,next) =>{
-        await Product.find({})
-            .then((product) =>{
+        await Category.find({})
+            .then((category) =>{
                 res.statusCode = 200;
                 res.setHeader('Content-Type', 'application/json');
-                res.json(product);
+                res.json(category);
             },(err) =>{
                 next(err);
             })
@@ -21,20 +21,20 @@ productRouter.route('/')
 
     })
     .post(async(req,res,next) =>{
-        await Product.find({})
-            .then( async (product) =>{
-                let productIDArr=[];
-                for(let i=0;i < product.length;i++  ){
-                    productIDArr[i]=product[i].productID;
+        await Category.find({})
+            .then( async (category) =>{
+                let categoryIDArr=[];
+                for(let i=0;i < category.length;i++  ){
+                    categoryIDArr[i]=category[i].productID;
                 }
-                let productID=generateId(productIDArr);
-                let productObj=req.body;
-                productObj.productID=productID;
-                await Product.create(productObj)
-                    .then((product) =>{
+                let categoryID=generateId(categoryIDArr);
+                let categoryObj=req.body;
+                categoryObj.orderID=categoryID;
+                await Category.create(categoryObj)
+                    .then((category) =>{
                         res.statusCode = 200;
                         res.setHeader('Content-Type', 'application/json');
-                        res.json(product);
+                        res.json(category);
                     },(err) =>{
                         next(err);
                     })
@@ -52,13 +52,13 @@ productRouter.route('/')
 
     });
 
-productRouter.route('/:id')
+categoryRouter.route('/:id')
     .get(async (req,res,next) => {
-        await Product.findById(req.params.id)
-            .then((product) => {
+        await Category.findById(req.params.id)
+            .then((order) => {
                 res.statusCode = 200;
                 res.setHeader('Content-Type', 'application/json');
-                res.json(product);
+                res.json(order);
             },(err) => {
                 next(err);
             })
@@ -67,7 +67,7 @@ productRouter.route('/:id')
             })
     })
     .put(async (req, res, next) => {
-        await Product.findByIdAndUpdate(req.params.id,{
+        await Category.findByIdAndUpdate(req.params.id,{
             $set:req.body
         },{ new :true })
             .then((student) => {
@@ -82,11 +82,11 @@ productRouter.route('/:id')
             })
     })
     .delete(async (req, res, next) => {
-        await Product.findByIdAndRemove(req.params.id)
-            .then((product) => {
+        await Category.findByIdAndRemove(req.params.id)
+            .then((order) => {
                 res.statusCode = 200;
                 res.setHeader('Content-Type', 'application/json');
-                res.json(product);
+                res.json(order);
             },(err) => {
                 next(err);
             })
@@ -95,20 +95,20 @@ productRouter.route('/:id')
             })
     });
 
-/*Product ID */
-function  generateId(productIdArray)
+/*Category ID */
+function  generateId(categoryIdArray)
 {
-    let productId;
-    let arrSize = productIdArray.length;
+    let categoryId;
+    let arrSize = categoryIdArray.length;
     arrSize++;
 
-    productId="P0"+arrSize;
-    if(productIdArray.includes(productId))
+    categoryId="CA0"+arrSize;
+    if(categoryIdArray.includes(categoryId))
     {
         arrSize++;
-        productId="P0"+arrSize;
+        categoryId="CA0"+arrSize;
     }
-    return productId;
+    return categoryId;
 }
 
-module.exports = productRouter;
+module.exports = categoryRouter;

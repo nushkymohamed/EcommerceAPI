@@ -13,19 +13,6 @@ const User = new Schema(
             default: "",
             required: true,
         },
-        userType: {
-            type: String,
-            default: "",
-            required: true,
-        },
-        status: {
-            type: String,
-            default: "Active",
-        },
-        admin: {
-            type: Boolean,
-            default: false,
-        },
         password: {
             type: String,
             default: "",
